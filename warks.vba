@@ -293,6 +293,7 @@ Public Sub MarkJumpTo(Optional ByVal markName As String = "")
     ' Push current position to the reserved ' mark for back jumps.
     MarkSetTo("'")
 
+    ' Move the cursor to the mark.
     Selection.SetRange pos, pos
     ' Just to be sure that no chunk is selected.
     Selection.Collapse wdCollapseStart
@@ -302,14 +303,19 @@ Public Sub MarkJumpTo(Optional ByVal markName As String = "")
     ' and then switch back into the reading layout. Unfortunately a full freeze
     ' of the screen is not possible but we can reduce the jarring flashing a
     ' little bit with Application.ScreenUpdating = False.
-    Dim isReadMode : isReadMode = ActiveDocument.ActiveWindow.View.ReadingLayout
-    Application.ScreenUpdating = Not isReadMode
-    ActiveDocument.ActiveWindow.View.ReadingLayout = False
+    ' For that, ActiveDocument.ActiveWindow.View.ReadingLayout is unreliable in
+    ' case the document is a frameset. Using .View.Type is more reliable.
+    Dim docViewType As WdViewType
+    docViewType = ActiveDocument.ActiveWindow.View.Type
+    ' Not perfect, but it reduces flashing a bit.
+    If docViewType = wdReadingView Then
+        Application.ScreenUpdating = False
+        ActiveDocument.ActiveWindow.View.Type = wdPrintView
+    End If
 
-    ActiveWindow.ScrollIntoView Selection.Range, True
-
-    ' Restore layout.
-    ActiveDocument.ActiveWindow.View.ReadingLayout = isReadMode
+    'ActiveWindow.ScrollIntoView Selection.range, True
+    ActiveWindow.ScrollIntoView ActiveDocument.range(pos, pos), True
+    ActiveDocument.ActiveWindow.View.Type = docViewType
     Application.ScreenUpdating = True
 
 End Sub
