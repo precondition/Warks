@@ -19,27 +19,6 @@ Private loadedDocKey As String
 Private Const FIELD_SEP_CODE As Long = 31
 Private Const RECORD_SEP_CODE   As Long = 30
 
-
-Private Declare PtrSafe Function FindWindowEx Lib "user32" _
-    Alias "FindWindowExA" (ByVal hWnd1 As LongPtr, ByVal hWnd2 As LongPtr, _
-    ByVal lpsz1 As String, ByVal lpsz2 As String) As LongPtr
-
-Private Declare PtrSafe Function GetWindowRect Lib "user32" _
-    (ByVal hWnd As LongPtr, lpRect As RECT) As Long
-
-Private Type RECT
-    Left As Long: Top As Long: Right As Long: Bottom As Long
-End Type
-
-Private Function FindWordContentPane() As LongPtr
-    Dim hApp As LongPtr, hWwF As LongPtr, hWwB As LongPtr
-    hApp = FindWindowEx(0, 0, "OpusApp", vbNullString)
-    hWwF = FindWindowEx(hApp, 0, "_WwF", vbNullString)
-    hWwB = FindWindowEx(hWwF, 0, "_WwB", vbNullString)
-    FindWordContentPane = FindWindowEx(hWwB, 0, "_WwG", vbNullString)
-End Function
-
-
 Private Function FIELD_SEP$()
     FIELD_SEP = Chr$(FIELD_SEP_CODE)
 End Function
