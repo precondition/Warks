@@ -118,16 +118,6 @@ End Sub
 
 Public Sub MarkSetTo(Optional ByVal markName As String = "")
     EnsureMarksLoaded
-    If Len(markName) < 1 Then
-        markName = InputBox("Set mark:", APPNAME)
-
-        If markName = "'" Then
-            MsgBox "Reserved mark name: Cannot manually set the ' (apostrophe) mark!", vbExclamation, APPNAME
-            Exit Sub
-        End If
-
-    End If
-
     If Len(markName) < 1 Then Exit Sub
 
     If IsGlobalMark(markName) Then
@@ -362,7 +352,12 @@ Public Sub MarkJump()
 End Sub
 
 Public Sub MarkSet()
-    Call MarkSetTo(InputBox("Set mark:", APPNAME))
+    Dim markName As String : markName = InputBox("Set mark:", APPNAME)
+    If markName = "'" Then
+        MsgBox "Reserved mark name: Cannot manually set the ' (apostrophe) mark!", vbExclamation, APPNAME
+        Exit Sub
+    End If
+    Call MarkSetTo(markName)
 End Sub
 
 Public Sub MarkJumpLine()
