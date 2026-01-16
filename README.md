@@ -3,6 +3,12 @@
 
 Warks makes moving around long Word documents feel instant. Set a mark, jump to it, jump back, and even bounce across documents, all without inserting anything into the file. Marks persist across sessions, work on read-only docs, and are designed for keyboard-centric reading workflows. Inspired by Vim marks, Warks brings that speed to Word.
 
+
+
+https://github.com/user-attachments/assets/70c6e6f6-ecbb-4079-b9f1-404b6c899ee2
+
+
+
 **Why Warks instead of native Word Bookmarks?**
 
 - Works in read-only and leaves no trace
